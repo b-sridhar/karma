@@ -38,9 +38,6 @@ public class Main {
             props = gson.fromJson(reader, Map.class);
             reader.close();
 
-            /*System.out.println(props.get("jira_username"));
-            System.out.println(props.get("jira_query"));*/
-
         }catch (Exception ex){
             System.out.println("Unable to load properties from .karma.properties.");
             System.out.println("Exception: " + ex.getMessage());
@@ -96,7 +93,6 @@ public class Main {
             String query = jsonQuery.toString();
 
             String response = post(restUrl, username, password, query);
-            //System.out.println("Response: " + response);
 
             JsonObject root = new JsonParser().parse(response).getAsJsonObject();
             JsonArray issues = root.get("issues").getAsJsonArray();
@@ -189,7 +185,8 @@ public class Main {
             msg.setReplyTo(InternetAddress.parse(props.get("email_to_address"), false));
             msg.setSubject("Weekly Update", "UTF-8");
             msg.setSentDate(new Date());
-            msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse(props.get("email_from_address"), false));
+            msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse(props.get("email_to_address"), false));
+            msg.addRecipients(Message.RecipientType.CC, InternetAddress.parse(props.get("email_from_address")));
 
             BodyPart bodyPart = new MimeBodyPart();
             bodyPart.setContent(htmlWriter.toString(), "text/html");
