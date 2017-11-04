@@ -1,0 +1,13 @@
+# OS files
+.DS_Store
+
+# Vagrant
+.vagrant
+
+#IntelliJ
+*.iml
+.idea*
+*.class
+out/*
+target/*
+.idea_modules/
